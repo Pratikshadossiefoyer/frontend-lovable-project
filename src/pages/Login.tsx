@@ -1,14 +1,14 @@
 
-import RegisterForm from "@/components/RegisterForm";
+import LoginForm from "@/components/LoginForm";
 
-const Index = () => {
+const Login = () => {
   return (
     <div className="h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden">
       <div className="w-full max-w-md">
-        <RegisterForm />
+        <LoginForm />
       </div>
     </div>
   );
 };
 
-export default Index;
+export default Login;
