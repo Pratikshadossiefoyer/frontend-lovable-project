@@ -1,131 +1,72 @@
-import React, { useEffect } from 'react';
+
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
-import { ProjectFormFields } from "@/components/ProjectFormFields";
-import { ProjectFormPopup } from "@/components/ProjectFormPopup";
-import { useProjectForm } from "@/hooks/useProjectForm";
-import { createProject, fetchEmployeesInsideOrganization } from "../../services/api";
-import { useProjects } from "./ProjectsContext";
+import { Plus, Loader2 } from "lucide-react";
+import { ProjectFormFields } from './ProjectFormFields';
+import { ProjectFormPopup } from './ProjectFormPopup';
+import { useProjectForm } from '@/hooks/useProjectForm';
 
 const AddProjectForm = () => {
   const {
     projectData,
     selectedEmployees,
     employeeOptions,
-    setEmployeeOptions,
     isValidUrl,
-    setIsValidUrl,
     loading,
-    setLoading,
     showPopup,
     popupType,
     error,
     handleInputChange,
     handleEmployeeChange,
-    normalizeUrl,
-    validateUrl,
     showAnimatedPopup,
     handlePopupClose,
     resetForm,
   } = useProjectForm();
 
-  const authToken = localStorage.getItem("authToken");
-  const userRole = localStorage.getItem('userRole');
-  const { refreshProjects } = useProjects();
+  // Mock user role for now - in real app this would come from auth context
+  const userRole = 'admin';
 
-  // Load employees on component mount
-  useEffect(() => {
-    const loadEmployees = async () => {
-      if (!authToken) {
-        showAnimatedPopup('error', { message: "Authentication token is missing." });
-        return;
-      }
-      
-      setLoading(true);
-      try {
-        const data = await fetchEmployeesInsideOrganization(authToken);
-        const employees = data.employees || [];
-        const options = employees.map((emp) => ({
-          value: emp.id,
-          label: emp.first_name
-            ? `${emp.first_name} ${emp.last_name}: ${emp.id}`
-            : `${emp.email} : ${emp.id}`
-        }));
-        setEmployeeOptions(options);
-      } catch (err) {
-        console.error('Failed to load employees:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadEmployees();
-  }, [authToken]);
-
-  const getFriendlyErrorMessage = (errorMessage) => {
-    const errorMap = {
-      'project with this target url already exists.': 'Project already exists',
-      'Invalid pk "118" - object does not exist.': 'Some employees haven\'t joined or verified their accounts yet.',
-    };
-    return errorMap[errorMessage] || 'Project may already exist or include unverified employees. Please review the details.';
-  };
-
-  const handleSubmitProject = async () => {
-    if (!authToken) {
-      showAnimatedPopup('error', { message: "Authentication token is missing." });
-      return;
-    }
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
     if (!projectData.domain) {
       showAnimatedPopup('warning', { message: "Domain is required." });
       return;
     }
 
-    const normalizedUrl = normalizeUrl(projectData.domain);
-    if (!normalizedUrl || !validateUrl(normalizedUrl)) {
-      setIsValidUrl(false);
-      showAnimatedPopup('warning', { message: "Please enter a valid URL" });
+    if (!projectData.name) {
+      showAnimatedPopup('warning', { message: "Project name is required." });
       return;
     }
 
-    setLoading(true);
+    if (!projectData.description) {
+      showAnimatedPopup('warning', { message: "Description is required." });
+      return;
+    }
+
+    // Simulate API call
     try {
-      const employeeIds = selectedEmployees.map((emp) => emp.value);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const response = await createProject(authToken, {
-        ...projectData,
-        target_url: normalizedUrl,
-        team_members: employeeIds,
-      });
-
+      // Simulate success
       resetForm();
-      
-      await refreshProjects();
-
-      const encodedUrl = encodeURIComponent(response.data.target_url);
-      localStorage.setItem(`firstCrawl_${response.data.id}`, "true");
-
       showAnimatedPopup('success', {
-        projectId: response.data.id,
-        encodedUrl: encodedUrl
+        projectId: 'mock-id',
+        encodedUrl: encodeURIComponent(projectData.domain)
       });
-
     } catch (error) {
-      const errorMessage = error.message || 'An unexpected error occurred.';
-      showAnimatedPopup('error', { message: getFriendlyErrorMessage(errorMessage) });
-    } finally {
-      setLoading(false);
+      showAnimatedPopup('error', { message: 'Failed to create project. Please try again.' });
     }
   };
 
-  if (loading && employeeOptions.length === 0) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-600" />
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
           <h4 className="text-lg font-medium text-gray-900">Loading...</h4>
-          <p className="text-gray-600">Setting up your project form</p>
+          <p className="text-gray-600">Setting up your workspace</p>
         </div>
       </div>
     );
@@ -133,54 +74,52 @@ const AddProjectForm = () => {
 
   return (
     <>
-      <Card className="w-full max-w-2xl mx-auto shadow-xl border-0 overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Plus className="w-6 h-6 text-white" />
+      <Card className="w-full max-w-2xl mx-auto shadow-2xl border-0 overflow-hidden bg-white/95 backdrop-blur-sm">
+        <CardHeader className="text-center p-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_25%,rgba(255,255,255,0.1)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[length:20px_20px] animate-pulse"></div>
+          <div className="relative z-10">
+            <div className="mx-auto w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center shadow-lg mb-4 backdrop-blur-sm">
+              <Plus className="w-8 h-8 text-white" />
             </div>
-            <div>
-              <CardTitle className="text-2xl font-bold text-gray-900">
-                Add New Project
-              </CardTitle>
-              <p className="text-gray-600 mt-1">
-                Create a new SEO project and start optimizing your website's performance
-              </p>
-            </div>
+            <CardTitle className="text-2xl font-bold mb-2">Add New Project</CardTitle>
+            <p className="text-blue-100 text-sm">
+              Create a new SEO project and start optimizing your website's performance
+            </p>
           </div>
         </CardHeader>
 
         <CardContent className="p-8">
-          <ProjectFormFields
-            projectData={projectData}
-            selectedEmployees={selectedEmployees}
-            employeeOptions={employeeOptions}
-            isValidUrl={isValidUrl}
-            userRole={userRole}
-            onInputChange={handleInputChange}
-            onEmployeeChange={handleEmployeeChange}
-          />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <ProjectFormFields
+              projectData={projectData}
+              selectedEmployees={selectedEmployees}
+              employeeOptions={employeeOptions}
+              isValidUrl={isValidUrl}
+              userRole={userRole}
+              onInputChange={handleInputChange}
+              onEmployeeChange={handleEmployeeChange}
+            />
 
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <Button
-              onClick={handleSubmitProject}
-              disabled={loading}
-              className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Creating Project...
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                  Create Project
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </>
-              )}
-            </Button>
-          </div>
+            <div className="pt-4">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Creating Project...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-5 h-5 mr-2" />
+                    Create Project
+                  </>
+                )}
+              </Button>
+            </div>
+          </form>
         </CardContent>
       </Card>
 

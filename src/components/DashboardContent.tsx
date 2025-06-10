@@ -2,9 +2,18 @@
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Users, UserPlus, Brain, Rocket, BarChart3, Bell, Search, Menu } from "lucide-react";
+import { Plus, Users, UserPlus, Brain, Rocket, BarChart3, Bell, Search } from "lucide-react";
+import { InviteTeamDialog } from "./InviteTeamDialog";
+import { AddFreelancerDialog } from "./AddFreelancerDialog";
+import { useNavigate } from "react-router-dom";
 
 export function DashboardContent() {
+  const navigate = useNavigate();
+
+  const handleProjectsClick = () => {
+    navigate('/manage-projects');
+  };
+
   return (
     <SidebarInset className="flex flex-col">
       {/* Top Navigation */}
@@ -21,14 +30,18 @@ export function DashboardContent() {
               <Plus className="w-4 h-4 mr-2" />
               Add Project
             </Button>
-            <Button variant="outline" size="sm" className="h-9 px-4 border-gray-200 hover:bg-gray-50">
-              <Users className="w-4 h-4 mr-2" />
-              Invite Team
-            </Button>
-            <Button size="sm" className="h-9 px-4 bg-blue-600 hover:bg-blue-700">
-              <UserPlus className="w-4 h-4 mr-2" />
-              Add Freelancer
-            </Button>
+            <InviteTeamDialog>
+              <Button variant="outline" size="sm" className="h-9 px-4 border-gray-200 hover:bg-gray-50">
+                <Users className="w-4 h-4 mr-2" />
+                Invite Team
+              </Button>
+            </InviteTeamDialog>
+            <AddFreelancerDialog>
+              <Button size="sm" className="h-9 px-4 bg-blue-600 hover:bg-blue-700">
+                <UserPlus className="w-4 h-4 mr-2" />
+                Add Freelancer
+              </Button>
+            </AddFreelancerDialog>
           </div>
           <div className="flex items-center gap-3 ml-4 pl-4 border-l border-gray-200">
             <Button variant="ghost" size="icon" className="h-9 w-9">
@@ -53,7 +66,10 @@ export function DashboardContent() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+          <Card 
+            className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={handleProjectsClick}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-blue-700">Total Projects</CardTitle>
               <BarChart3 className="h-4 w-4 text-blue-600" />

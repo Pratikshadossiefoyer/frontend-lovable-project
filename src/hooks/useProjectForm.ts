@@ -21,7 +21,11 @@ export const useProjectForm = () => {
   });
   
   const [selectedEmployees, setSelectedEmployees] = useState<EmployeeOption[]>([]);
-  const [employeeOptions, setEmployeeOptions] = useState<EmployeeOption[]>([]);
+  const [employeeOptions, setEmployeeOptions] = useState<EmployeeOption[]>([
+    { value: '1', label: 'John Doe' },
+    { value: '2', label: 'Jane Smith' },
+    { value: '3', label: 'Mike Johnson' },
+  ]);
   const [isValidUrl, setIsValidUrl] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);

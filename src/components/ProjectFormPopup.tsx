@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FaCheck, FaTimes, FaExclamationTriangle } from "react-icons/fa";
+import { Check, X, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ProjectFormPopupProps {
@@ -21,11 +21,11 @@ export const ProjectFormPopup: React.FC<ProjectFormPopupProps> = ({
   const getIcon = () => {
     switch (type) {
       case 'success':
-        return <FaCheck className="w-8 h-8 text-green-500" />;
+        return <Check className="w-8 h-8 text-green-500" />;
       case 'warning':
-        return <FaExclamationTriangle className="w-8 h-8 text-yellow-500" />;
+        return <AlertTriangle className="w-8 h-8 text-yellow-500" />;
       case 'error':
-        return <FaExclamationTriangle className="w-8 h-8 text-red-500" />;
+        return <AlertTriangle className="w-8 h-8 text-red-500" />;
     }
   };
 
