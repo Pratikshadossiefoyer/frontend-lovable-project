@@ -32,7 +32,12 @@ import {
   Play,
   Pause,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Activity,
+  Shield,
+  Link,
+  Database,
+  Zap
 } from "lucide-react";
 import { InviteTeamDialog } from "./InviteTeamDialog";
 import { AddFreelancerDialog } from "./AddFreelancerDialog";
@@ -43,47 +48,56 @@ const crawledUrls = [
     id: 1,
     url: "https://www.technolearn.in/",
     status: "200",
-    h1: "Improving Operations Through...",
+    h1: "Improving Operations Through Digital Innovation",
     index: "No",
     wordCount: 2151,
-    canonical: "https://www.technolearn.in/per...",
-    statusColor: "bg-green-500"
+    canonical: "https://www.technolearn.in/",
+    statusColor: "bg-emerald-500"
   },
   {
     id: 2,
     url: "https://www.technolearn.in/about.php",
     status: "200", 
-    h1: "Navigate your next in Aerospace...",
+    h1: "Navigate your next in Aerospace Technology",
     index: "No",
     wordCount: 1122,
     canonical: "https://www.technolearn.in/about.php",
-    statusColor: "bg-green-500"
+    statusColor: "bg-emerald-500"
   },
   {
     id: 3,
-    url: "https://www.technolearn.in/services/digital-se...",
+    url: "https://www.technolearn.in/services/digital-services",
     status: "200",
     h1: "Infosys Sustainability Services",
     index: "No", 
     wordCount: 1023,
-    canonical: "https://www.technolearn.in/servic...",
-    statusColor: "bg-green-500"
+    canonical: "https://www.technolearn.in/services/",
+    statusColor: "bg-emerald-500"
   },
-  // Add more mock data as needed
+  {
+    id: 4,
+    url: "https://www.technolearn.in/contact",
+    status: "404",
+    h1: "Page Not Found",
+    index: "No", 
+    wordCount: 0,
+    canonical: "N/A",
+    statusColor: "bg-red-500"
+  },
 ];
 
 const projectStats = [
-  { title: "SSL", value: "Yes", color: "text-green-600" },
-  { title: "Google Analytics", value: "Yes", color: "text-green-600" },
-  { title: "Favicon", value: "✓", color: "text-green-600" },
-  { title: "Broken Pages", value: "0", color: "text-green-600" },
-  { title: "Total Page Links", value: "28", color: "text-blue-600" }
+  { title: "SSL Certificate", value: "Secured", color: "text-emerald-600", icon: Shield, bgColor: "bg-emerald-50" },
+  { title: "Google Analytics", value: "Connected", color: "text-blue-600", icon: BarChart3, bgColor: "bg-blue-50" },
+  { title: "Favicon", value: "Present", color: "text-emerald-600", icon: CheckCircle2, bgColor: "bg-emerald-50" },
+  { title: "Broken Pages", value: "1 Found", color: "text-red-600", icon: AlertCircle, bgColor: "bg-red-50" },
+  { title: "Total Pages", value: "28 Links", color: "text-purple-600", icon: Link, bgColor: "bg-purple-50" }
 ];
 
 const socialMediaStats = [
-  { platform: "Facebook", color: "bg-blue-600", count: "1.2K" },
-  { platform: "Instagram", color: "bg-pink-500", count: "856" },
-  { platform: "LinkedIn", color: "bg-blue-700", count: "2.1K" }
+  { platform: "Facebook", color: "from-blue-600 to-blue-700", count: "1.2K", growth: "+12%" },
+  { platform: "Instagram", color: "from-pink-500 to-pink-600", count: "856", growth: "+8%" },
+  { platform: "LinkedIn", color: "from-blue-700 to-blue-800", count: "2.1K", growth: "+15%" }
 ];
 
 export function ProjectDashboardContent() {
@@ -99,111 +113,121 @@ export function ProjectDashboardContent() {
   };
 
   return (
-    <SidebarInset className="flex flex-col">
-      {/* Top Navigation */}
-      <header className="flex h-16 shrink-0 items-center gap-4 border-b border-gray-200 bg-white px-6">
-        <SidebarTrigger className="-ml-1" />
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <span className="text-blue-600 hover:underline cursor-pointer">Home</span>
-          <span>/</span>
-          <span className="text-blue-600 hover:underline cursor-pointer">Dashboard</span>
-          <span>/</span>
-          <span className="text-blue-600 hover:underline cursor-pointer">Manage Project</span>
-          <span>/</span>
-          <span>technolearn</span>
-        </div>
-        <div className="ml-auto flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" className="h-9 px-4 border-gray-200 hover:bg-gray-50">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Projects
-            </Button>
-            <InviteTeamDialog>
-              <Button variant="outline" size="sm" className="h-9 px-4 border-gray-200 hover:bg-gray-50">
-                <Users className="w-4 h-4 mr-2" />
-                Invite Team
-              </Button>
-            </InviteTeamDialog>
-            <AddFreelancerDialog>
-              <Button size="sm" className="h-9 px-4 bg-blue-600 hover:bg-blue-700">
-                <UserPlus className="w-4 h-4 mr-2" />
-                Add Freelancer
-              </Button>
-            </AddFreelancerDialog>
+    <SidebarInset className="flex flex-col bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      {/* Enhanced Top Navigation */}
+      <header className="flex h-20 shrink-0 items-center gap-4 border-b border-slate-200/60 bg-white/80 backdrop-blur-sm px-8 shadow-sm">
+        <SidebarTrigger className="-ml-1 hover:bg-slate-100 rounded-lg transition-colors" />
+        <div className="flex items-center gap-3 text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <span className="text-blue-600 hover:text-blue-700 cursor-pointer font-medium transition-colors">Home</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-blue-600 hover:text-blue-700 cursor-pointer font-medium transition-colors">Dashboard</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-blue-600 hover:text-blue-700 cursor-pointer font-medium transition-colors">Manage Project</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-slate-700 font-semibold">technolearn</span>
           </div>
+        </div>
+        <div className="ml-auto flex items-center gap-3">
+          <Button variant="outline" size="sm" className="h-10 px-5 border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Projects
+          </Button>
+          <InviteTeamDialog>
+            <Button variant="outline" size="sm" className="h-10 px-5 border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-sm">
+              <Users className="w-4 h-4 mr-2" />
+              Invite Team
+            </Button>
+          </InviteTeamDialog>
+          <AddFreelancerDialog>
+            <Button size="sm" className="h-10 px-5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200">
+              <UserPlus className="w-4 h-4 mr-2" />
+              Add Freelancer
+            </Button>
+          </AddFreelancerDialog>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 space-y-6">
-        {/* Project Tabs */}
+      {/* Enhanced Main Content */}
+      <main className="flex-1 p-8 space-y-8">
+        {/* Enhanced Project Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 bg-gray-900 p-1 rounded-lg">
+          <TabsList className="grid w-full grid-cols-6 bg-slate-900 p-1.5 rounded-xl shadow-lg">
             <TabsTrigger 
               value="dashboard" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <BarChart3 className="w-4 h-4" />
-              Project Dashboard
+              <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
             <TabsTrigger 
               value="keyword-ranking" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <TrendingUp className="w-4 h-4" />
-              Keyword Ranking Tracker
+              <span className="hidden sm:inline">Keywords</span>
             </TabsTrigger>
             <TabsTrigger 
               value="website-speed" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <Gauge className="w-4 h-4" />
-              Website Speed
+              <span className="hidden sm:inline">Speed</span>
             </TabsTrigger>
             <TabsTrigger 
               value="history" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <History className="w-4 h-4" />
-              History
+              <span className="hidden sm:inline">History</span>
             </TabsTrigger>
             <TabsTrigger 
               value="report" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <FileText className="w-4 h-4" />
-              Report
+              <span className="hidden sm:inline">Reports</span>
             </TabsTrigger>
             <TabsTrigger 
               value="compare-report" 
-              className="text-white data-[state=active]:bg-white data-[state=active]:text-gray-900 flex items-center gap-2"
+              className="text-white data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-lg flex items-center gap-2 rounded-lg transition-all duration-200 py-3"
             >
               <PieChart className="w-4 h-4" />
-              Compare Report
+              <span className="hidden sm:inline">Compare</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dashboard" className="space-y-6 mt-6">
-            {/* Crawl Status and Stats */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Crawl Control */}
-              <Card className="lg:col-span-2">
-                <CardHeader className="pb-3">
+          <TabsContent value="dashboard" className="space-y-8 mt-8">
+            {/* Enhanced Crawl Status and Stats */}
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              {/* Enhanced Crawl Control */}
+              <Card className="xl:col-span-2 border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+                <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-lg font-semibold">Crawl Status</CardTitle>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Crawl Number: 1 | Crawl Time: 6/10/2025, 5:01:49 PM
-                      </p>
+                    <div className="space-y-2">
+                      <CardTitle className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                        Crawl Analytics
+                      </CardTitle>
+                      <div className="flex items-center gap-4 text-sm text-slate-600">
+                        <div className="flex items-center gap-2">
+                          <Database className="w-4 h-4 text-blue-500" />
+                          <span>Crawl #1</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-emerald-500" />
+                          <span>6/10/2025, 5:01:49 PM</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        Urls Count: 70
+                    <div className="flex items-center gap-4">
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 px-4 py-2 font-semibold">
+                        <Activity className="w-4 h-4 mr-2" />
+                        70 URLs
                       </Badge>
                       <Button 
                         onClick={handleStartCrawling}
                         disabled={isCrawling}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-6"
                       >
                         {isCrawling ? (
                           <>
@@ -212,8 +236,8 @@ export function ProjectDashboardContent() {
                           </>
                         ) : (
                           <>
-                            <Play className="w-4 h-4 mr-2" />
-                            Re-Crawl
+                            <Zap className="w-4 h-4 mr-2" />
+                            Start Crawl
                           </>
                         )}
                       </Button>
@@ -222,107 +246,143 @@ export function ProjectDashboardContent() {
                 </CardHeader>
                 <CardContent>
                   {isCrawling ? (
-                    <div className="text-center py-8">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                      <p className="text-gray-600">Starting crawl, please wait...</p>
+                    <div className="text-center py-12">
+                      <div className="relative mx-auto mb-6">
+                        <div className="w-20 h-20 border-4 border-emerald-200 rounded-full"></div>
+                        <div className="w-20 h-20 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+                      </div>
+                      <h3 className="text-lg font-semibold text-slate-800 mb-2">Crawling in Progress</h3>
+                      <p className="text-slate-600">Analyzing your website structure and content...</p>
                     </div>
                   ) : (
-                    <div className="text-sm text-orange-600">
-                      Crawl on cooldown. Next attempt in: 11h 39m 37s
+                    <div className="bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 rounded-xl p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                          <Clock className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-orange-800">Crawl Cooldown Active</p>
+                          <p className="text-sm text-orange-600">Next crawl available in: 11h 39m 37s</p>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </CardContent>
               </Card>
 
-              {/* Quick Stats */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-semibold">Quick Stats</CardTitle>
+              {/* Enhanced Quick Stats */}
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                    Site Health
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {projectStats.map((stat, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">{stat.title}</span>
-                      <span className={`text-sm font-medium ${stat.color}`}>{stat.value}</span>
-                    </div>
-                  ))}
+                  {projectStats.map((stat, index) => {
+                    const IconComponent = stat.icon;
+                    return (
+                      <div key={index} className={`flex items-center justify-between p-3 rounded-lg ${stat.bgColor} transition-all hover:scale-105 cursor-pointer`}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                            <IconComponent className={`w-4 h-4 ${stat.color}`} />
+                          </div>
+                          <span className="text-sm font-medium text-slate-700">{stat.title}</span>
+                        </div>
+                        <span className={`text-sm font-bold ${stat.color}`}>{stat.value}</span>
+                      </div>
+                    );
+                  })}
                 </CardContent>
               </Card>
             </div>
 
-            {/* Social Media Stats */}
+            {/* Enhanced Social Media Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {socialMediaStats.map((social, index) => (
-                <Card key={index} className="text-center">
-                  <CardContent className="pt-6">
-                    <div className={`w-16 h-16 ${social.color} rounded-lg mx-auto mb-4 flex items-center justify-center`}>
+                <Card key={index} className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${social.color} rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg`}>
                       <Globe className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">{social.platform}</h3>
-                    <p className="text-2xl font-bold text-gray-900">{social.count}</p>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">{social.platform}</h3>
+                    <div className="space-y-1">
+                      <p className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">{social.count}</p>
+                      <p className="text-sm font-semibold text-emerald-600">{social.growth} this month</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
 
-            {/* Crawled URLs Table */}
-            <Card>
+            {/* Enhanced Crawled URLs Table */}
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-semibold">Crawled URLs</CardTitle>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm">
+                  <div>
+                    <CardTitle className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                      Crawled URLs
+                    </CardTitle>
+                    <p className="text-sm text-slate-600 mt-1">Detailed analysis of your website pages</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button variant="outline" size="sm" className="border-slate-200 hover:bg-slate-50">
                       <Search className="w-4 h-4 mr-2" />
-                      Search
+                      Search URLs
                     </Button>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto rounded-xl border border-slate-200">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gray-900">
-                        <TableHead className="text-white font-semibold">Fetching URL</TableHead>
-                        <TableHead className="text-white font-semibold">Status</TableHead>
-                        <TableHead className="text-white font-semibold">H1</TableHead>
-                        <TableHead className="text-white font-semibold">Index</TableHead>
-                        <TableHead className="text-white font-semibold">Word Count</TableHead>
-                        <TableHead className="text-white font-semibold">Canonical</TableHead>
-                        <TableHead className="text-white font-semibold text-center">Action</TableHead>
+                      <TableRow className="bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-900 hover:to-slate-800">
+                        <TableHead className="text-white font-bold text-sm">URL</TableHead>
+                        <TableHead className="text-white font-bold text-sm">Status</TableHead>
+                        <TableHead className="text-white font-bold text-sm">H1 Tag</TableHead>
+                        <TableHead className="text-white font-bold text-sm">Indexed</TableHead>
+                        <TableHead className="text-white font-bold text-sm">Words</TableHead>
+                        <TableHead className="text-white font-bold text-sm">Canonical</TableHead>
+                        <TableHead className="text-white font-bold text-sm text-center">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {crawledUrls.map((url) => (
-                        <TableRow key={url.id} className="hover:bg-gray-50">
-                          <TableCell>
+                        <TableRow key={url.id} className="hover:bg-slate-50/80 transition-colors">
+                          <TableCell className="max-w-xs">
                             <div className="flex items-center gap-2">
                               <a 
                                 href={url.url} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline text-sm max-w-xs truncate"
+                                className="text-blue-600 hover:text-blue-700 text-sm truncate font-medium transition-colors"
                               >
                                 {url.url}
                               </a>
-                              <ExternalLink className="w-3 h-3 text-gray-400" />
+                              <ExternalLink className="w-3 h-3 text-slate-400 hover:text-slate-600 transition-colors" />
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge className={`${url.statusColor} text-white text-xs`}>
+                            <Badge className={`${url.statusColor} text-white text-xs font-semibold px-3 py-1`}>
                               {url.status}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-sm max-w-xs truncate">{url.h1}</TableCell>
+                          <TableCell className="max-w-xs">
+                            <span className="text-sm text-slate-700 truncate block font-medium">{url.h1}</span>
+                          </TableCell>
                           <TableCell>
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs font-medium bg-slate-100 text-slate-700">
                               {url.index}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-sm">{url.wordCount}</TableCell>
-                          <TableCell className="text-sm max-w-xs truncate">{url.canonical}</TableCell>
+                          <TableCell>
+                            <span className="text-sm font-semibold text-slate-800">{url.wordCount.toLocaleString()}</span>
+                          </TableCell>
+                          <TableCell className="max-w-xs">
+                            <span className="text-sm text-slate-600 truncate block">{url.canonical}</span>
+                          </TableCell>
                           <TableCell className="text-center">
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-blue-50">
                               <Eye className="w-4 h-4 text-blue-600" />
                             </Button>
                           </TableCell>
@@ -335,63 +395,73 @@ export function ProjectDashboardContent() {
             </Card>
           </TabsContent>
 
-          {/* Other tab contents */}
-          <TabsContent value="keyword-ranking" className="space-y-6 mt-6">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Keyword Ranking Tracker</h3>
-                <p className="text-gray-600">Track your website's keyword positions across search engines.</p>
+          {/* Other enhanced tab contents */}
+          <TabsContent value="keyword-ranking" className="space-y-8 mt-8">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+              <CardContent className="p-12 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <TrendingUp className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">Keyword Ranking Tracker</h3>
+                <p className="text-slate-600 text-lg">Track your website's keyword positions across search engines and monitor your SEO performance.</p>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="website-speed" className="space-y-6 mt-6">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Gauge className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Website Speed Analysis</h3>
-                <p className="text-gray-600">Analyze your website's performance and loading speed.</p>
+          <TabsContent value="website-speed" className="space-y-8 mt-8">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+              <CardContent className="p-12 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <Gauge className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">Website Speed Analysis</h3>
+                <p className="text-slate-600 text-lg">Analyze your website's performance and loading speed across different devices and locations.</p>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="history" className="space-y-6 mt-6">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Crawl History</h3>
-                <p className="text-gray-600">View your previous crawl results and historical data.</p>
+          <TabsContent value="history" className="space-y-8 mt-8">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+              <CardContent className="p-12 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <History className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">Crawl History</h3>
+                <p className="text-slate-600 text-lg">View your previous crawl results and historical data to track your website's evolution.</p>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="report" className="space-y-6 mt-6">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">SEO Reports</h3>
-                <p className="text-gray-600">Generate comprehensive SEO reports for your website.</p>
+          <TabsContent value="report" className="space-y-8 mt-8">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+              <CardContent className="p-12 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <FileText className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">SEO Reports</h3>
+                <p className="text-slate-600 text-lg">Generate comprehensive SEO reports with actionable insights and recommendations.</p>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="compare-report" className="space-y-6 mt-6">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <PieChart className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Compare Reports</h3>
-                <p className="text-gray-600">Compare SEO metrics across different time periods.</p>
+          <TabsContent value="compare-report" className="space-y-8 mt-8">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50/50">
+              <CardContent className="p-12 text-center">
+                <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <PieChart className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">Compare Reports</h3>
+                <p className="text-slate-600 text-lg">Compare SEO metrics across different time periods and identify trends and improvements.</p>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
 
-        {/* Footer */}
-        <footer className="pt-8 border-t border-gray-200">
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <p>© 2025 SEO Detective - SEO TOOL.</p>
-            <p>Powered by GrowBizz</p>
+        {/* Enhanced Footer */}
+        <footer className="pt-8 border-t border-slate-200/60">
+          <div className="flex items-center justify-between text-sm text-slate-500">
+            <p className="font-medium">© 2025 SEO Detective - Professional SEO Analytics Platform</p>
+            <p className="font-medium">Powered by <span className="text-blue-600 font-semibold">GrowBizz</span></p>
           </div>
         </footer>
       </main>
