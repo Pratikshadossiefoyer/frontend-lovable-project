@@ -10,6 +10,8 @@ import AddProject from "./pages/AddProject";
 import Dashboard from "./pages/Dashboard";
 import ManageProjects from "./pages/ManageProjects";
 import ProjectDashboard from "./pages/ProjectDashboard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/manage-projects" element={<ManageProjects />} />
           <Route path="/project-dashboard" element={<ProjectDashboard />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
