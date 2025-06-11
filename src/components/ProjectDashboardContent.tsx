@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,9 @@ import { CrawlStatusCard } from "./CrawlStatusCard";
 import { SiteHealthCard } from "./SiteHealthCard";
 import { SocialMediaStats } from "./SocialMediaStats";
 import { CrawledUrlsTable } from "./CrawledUrlsTable";
+import { KeywordRankingContent } from "./KeywordRankingContent";
+import { WebsiteSpeedContent } from "./WebsiteSpeedContent";
+import { HistoryContent } from "./HistoryContent";
 import { ProjectTabsPlaceholder } from "./ProjectTabsPlaceholder";
 
 export function ProjectDashboardContent() {
@@ -135,29 +139,16 @@ export function ProjectDashboardContent() {
             <CrawledUrlsTable />
           </TabsContent>
 
-          {/* Other enhanced tab contents */}
           <TabsContent value="keyword-ranking" className="space-y-8 mt-8">
-            <ProjectTabsPlaceholder 
-              icon="keyword"
-              title="Keyword Ranking Tracker"
-              description="Track your website's keyword positions across search engines and monitor your SEO performance."
-            />
+            <KeywordRankingContent />
           </TabsContent>
 
           <TabsContent value="website-speed" className="space-y-8 mt-8">
-            <ProjectTabsPlaceholder 
-              icon="speed"
-              title="Website Speed Analysis"
-              description="Analyze your website's performance and loading speed across different devices and locations."
-            />
+            <WebsiteSpeedContent />
           </TabsContent>
 
           <TabsContent value="history" className="space-y-8 mt-8">
-            <ProjectTabsPlaceholder 
-              icon="history"
-              title="Crawl History"
-              description="View your previous crawl results and historical data to track your website's evolution."
-            />
+            <HistoryContent />
           </TabsContent>
 
           <TabsContent value="report" className="space-y-8 mt-8">
