@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown } from "lucide-react";
+import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown, Building2, User } from "lucide-react";
 
 const menuItems = [
   {
@@ -24,6 +24,19 @@ const menuItems = [
     icon: FolderOpen,
     url: "/projects",
     hasSubmenu: true,
+  },
+];
+
+const profileItems = [
+  {
+    title: "Company Profile",
+    icon: Building2,
+    url: "/company-profile",
+  },
+  {
+    title: "User Profile",
+    icon: User,
+    url: "/user-profile",
   },
 ];
 
@@ -74,6 +87,29 @@ export function AppSidebar() {
                       <item.icon className="w-5 h-5" />
                       <span className="font-medium">{item.title}</span>
                       {item.hasSubmenu && <ChevronDown className="w-4 h-4 ml-auto" />}
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup className="mt-8">
+          <div className="px-4 py-2 mb-4">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Profile</h3>
+          </div>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {profileItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton 
+                    asChild
+                    className="w-full mb-1 h-12 rounded-xl hover:bg-blue-50 transition-all duration-200"
+                  >
+                    <a href={item.url} className="flex items-center gap-3 px-4">
+                      <item.icon className="w-5 h-5 text-gray-600" />
+                      <span className="font-medium text-gray-700">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
