@@ -1,4 +1,3 @@
-
 import {
   Sidebar,
   SidebarContent,
@@ -10,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown, Building2, User } from "lucide-react";
+import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown, Building2, User, BarChart3 } from "lucide-react";
 
 const menuItems = [
   {
@@ -50,6 +49,11 @@ const toolsItems = [
     title: "Google Index Meta",
     icon: Globe,
     url: "/google-index",
+  },
+  {
+    title: "Website Analysis",
+    icon: BarChart3,
+    url: "/website-analysis",
   },
   {
     title: "Tech Detect",
