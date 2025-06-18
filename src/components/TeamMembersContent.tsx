@@ -13,113 +13,144 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarInitials } from "@/components/ui/avatar";
-import { Search, Users, Mail, Calendar, Filter, Download, UserPlus, Eye, Edit, Trash2 } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Search, FolderOpen, Users, Calendar, Filter, Download, UserPlus, Eye, Edit, Trash2, Building2 } from "lucide-react";
 
-// Sample team members data
-const teamMembers = [
+// Sample projects with team members data
+const projectsData = [
   {
     id: 1,
-    name: "Saurabh Nangare",
-    email: "saurabhnangare01@gmail.com",
-    role: "Project Manager",
-    joinDate: "2024-01-15",
-    status: "Active",
-    projects: ["TCS", "React", "Growbizz Server"],
-    avatar: "SN",
-    totalProjects: 3
+    name: "Test",
+    teamMembers: [
+      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" },
+      { email: "user02@gmail.com", name: "User Two", role: "Developer", avatar: "U2" }
+    ]
   },
   {
     id: 2,
-    name: "Pratiksha Nangare",
-    email: "nangarepratiksaha18@gmail.com",
-    role: "SEO Specialist",
-    joinDate: "2024-02-10",
-    status: "Active",
-    projects: ["TCS", "Infosys"],
-    avatar: "PN",
-    totalProjects: 2
+    name: "Inora",
+    teamMembers: [
+      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
+      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
+      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
+    ]
   },
   {
     id: 3,
-    name: "Vivek Nangare",
-    email: "viveknangare02@gmail.com",
-    role: "Developer",
-    joinDate: "2024-01-20",
-    status: "Active",
-    projects: ["React", "TCS", "Technolearn", "top"],
-    avatar: "VN",
-    totalProjects: 4
+    name: "Technolearn",
+    teamMembers: [
+      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
+      { email: "freelancer8@gmail.com", name: "Freelancer Eight", role: "Freelancer", avatar: "F8" },
+      { email: "freelancer12@gmail.com", name: "Freelancer Twelve", role: "Content Writer", avatar: "F12" },
+      { email: "user02@gmail.com", name: "User Two", role: "Developer", avatar: "U2" }
+    ]
   },
   {
     id: 4,
-    name: "Team Member",
-    email: "teammember6@gmail.com",
-    role: "Freelancer",
-    joinDate: "2024-03-05",
-    status: "Active",
-    projects: ["Technolearn", "Growbizz"],
-    avatar: "TM",
-    totalProjects: 2
+    name: "TCS",
+    teamMembers: [
+      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
+      { email: "freelancer12@gmail.com", name: "Freelancer Twelve", role: "Content Writer", avatar: "F12" },
+      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
+    ]
   },
   {
     id: 5,
-    name: "Freelancer User",
-    email: "freelancer7@gmail.com",
-    role: "Freelancer",
-    joinDate: "2024-02-28",
-    status: "Active",
-    projects: ["top", "Infosys"],
-    avatar: "FU",
-    totalProjects: 2
+    name: "Growbizz Server",
+    teamMembers: [
+      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" }
+    ]
+  },
+  {
+    id: 6,
+    name: "React",
+    teamMembers: [
+      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
+      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
+    ]
+  },
+  {
+    id: 7,
+    name: "Top",
+    teamMembers: [
+      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
+      { email: "freelancer9@gmail.com", name: "Freelancer Nine", role: "Designer", avatar: "F9" }
+    ]
+  },
+  {
+    id: 8,
+    name: "Infosys",
+    teamMembers: [
+      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" },
+      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" }
+    ]
   }
 ];
 
 const stats = [
   {
-    title: "Total Members",
-    value: "12",
-    icon: Users,
+    title: "Total Projects",
+    value: projectsData.length.toString(),
+    icon: FolderOpen,
     color: "text-blue-600",
     bgColor: "bg-blue-50",
     change: "+2 this month"
   },
   {
-    title: "Active Projects",
-    value: "9",
-    icon: Calendar,
+    title: "Active Members",
+    value: "15",
+    icon: Users,
     color: "text-green-600",
     bgColor: "bg-green-50",
-    change: "+1 this week"
+    change: "+3 this week"
   },
   {
-    title: "Freelancers",
-    value: "5",
-    icon: UserPlus,
+    title: "Teams",
+    value: "8",
+    icon: Building2,
     color: "text-purple-600",
     bgColor: "bg-purple-50",
-    change: "+3 this month"
+    change: "+1 this month"
   },
   {
-    title: "Team Leads",
-    value: "3",
-    icon: Mail,
+    title: "Avg Team Size",
+    value: "2.3",
+    icon: Calendar,
     color: "text-orange-600",
     bgColor: "bg-orange-50",
-    change: "No change"
+    change: "Optimal size"
   }
 ];
 
 export function TeamMembersContent() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRole, setSelectedRole] = useState("All");
 
-  const filteredMembers = teamMembers.filter(member => {
-    const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         member.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === "All" || member.role === selectedRole;
-    return matchesSearch && matchesRole;
-  });
+  const filteredProjects = projectsData.filter(project => 
+    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.teamMembers.some(member => 
+      member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  const getRoleBadgeColor = (role: string) => {
+    switch (role) {
+      case 'Project Manager':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'Developer':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      case 'SEO Specialist':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'Freelancer':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'Designer':
+        return 'bg-pink-100 text-pink-800 border-pink-200';
+      case 'Content Writer':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
 
   return (
     <SidebarInset className="flex flex-col">
@@ -131,7 +162,7 @@ export function TeamMembersContent() {
           <span>/</span>
           <span className="text-blue-600 hover:underline cursor-pointer">Dashboard</span>
           <span>/</span>
-          <span>Team Members</span>
+          <span>Project Teams</span>
         </div>
         <div className="ml-auto flex items-center gap-4">
           <Button variant="outline" size="sm" className="h-9 px-4 border-gray-200 hover:bg-gray-50">
@@ -140,7 +171,7 @@ export function TeamMembersContent() {
           </Button>
           <Button size="sm" className="h-9 px-4 bg-blue-600 hover:bg-blue-700">
             <UserPlus className="w-4 h-4 mr-2" />
-            Add Member
+            Add Team Member
           </Button>
         </div>
       </header>
@@ -150,8 +181,8 @@ export function TeamMembersContent() {
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Team Members</h1>
-            <p className="text-gray-600">Manage your team members and their project associations</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Project Teams</h1>
+            <p className="text-gray-600">Manage project teams and member assignments across all projects</p>
           </div>
         </div>
 
@@ -183,23 +214,12 @@ export function TeamMembersContent() {
                 <div className="relative flex-1 sm:w-80">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
-                    placeholder="Search by name or email..."
+                    placeholder="Search projects or team members..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 h-10 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
-                <select
-                  value={selectedRole}
-                  onChange={(e) => setSelectedRole(e.target.value)}
-                  className="px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="All">All Roles</option>
-                  <option value="Project Manager">Project Manager</option>
-                  <option value="SEO Specialist">SEO Specialist</option>
-                  <option value="Developer">Developer</option>
-                  <option value="Freelancer">Freelancer</option>
-                </select>
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="border-gray-200">
@@ -211,83 +231,64 @@ export function TeamMembersContent() {
           </CardContent>
         </Card>
 
-        {/* Team Members Table */}
+        {/* Projects and Teams Table */}
         <Card className="border-0 shadow-lg overflow-hidden">
           <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
             <CardTitle className="text-lg font-semibold text-gray-900">
-              Team Members ({filteredMembers.length})
+              Project Teams ({filteredProjects.length} Projects)
             </CardTitle>
-            <p className="text-sm text-gray-600">View and manage all team members and their project assignments</p>
+            <p className="text-sm text-gray-600">View all projects and their assigned team members</p>
           </CardHeader>
           
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="bg-gray-50/50">
-                  <TableHead className="font-semibold text-gray-900">Member</TableHead>
-                  <TableHead className="font-semibold text-gray-900">Role</TableHead>
-                  <TableHead className="font-semibold text-gray-900">Join Date</TableHead>
-                  <TableHead className="font-semibold text-gray-900">Projects</TableHead>
-                  <TableHead className="font-semibold text-gray-900">Status</TableHead>
-                  <TableHead className="font-semibold text-gray-900 text-center">Actions</TableHead>
+                  <TableHead className="font-semibold text-gray-900 w-16">Sr. No.</TableHead>
+                  <TableHead className="font-semibold text-gray-900 min-w-[200px]">Project Name</TableHead>  
+                  <TableHead className="font-semibold text-gray-900">Team Members</TableHead>
+                  <TableHead className="font-semibold text-gray-900 text-center w-32">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredMembers.map((member) => (
-                  <TableRow key={member.id} className="hover:bg-gray-50/50 transition-colors">
+                {filteredProjects.map((project, index) => (
+                  <TableRow key={project.id} className="hover:bg-gray-50/50 transition-colors">
+                    <TableCell className="font-medium text-gray-900">
+                      {index + 1}
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10">
-                          <AvatarFallback className="bg-blue-100 text-blue-600 font-semibold">
-                            {member.avatar}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                          <FolderOpen className="w-5 h-5 text-white" />
+                        </div>
                         <div>
-                          <div className="font-medium text-gray-900">{member.name}</div>
-                          <div className="text-sm text-gray-500">{member.email}</div>
+                          <div className="font-semibold text-gray-900">{project.name}</div>
+                          <div className="text-sm text-gray-500">{project.teamMembers.length} members</div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge 
-                        variant="secondary" 
-                        className={
-                          member.role === 'Project Manager' ? 'bg-blue-100 text-blue-800' :
-                          member.role === 'SEO Specialist' ? 'bg-green-100 text-green-800' :
-                          member.role === 'Developer' ? 'bg-purple-100 text-purple-800' :
-                          'bg-orange-100 text-orange-800'
-                        }
-                      >
-                        {member.role}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <span className="text-gray-700">{member.joinDate}</span>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-1 max-w-xs">
-                        {member.projects.slice(0, 3).map((project, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {project}
-                          </Badge>
+                      <div className="space-y-3">
+                        {project.teamMembers.map((member, memberIndex) => (
+                          <div key={memberIndex} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+                            <Avatar className="h-8 w-8">
+                              <AvatarFallback className="bg-white text-gray-700 text-xs font-medium border">
+                                {member.avatar}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium text-gray-900 text-sm truncate">{member.name}</div>
+                              <div className="text-xs text-gray-500 truncate">{member.email}</div>
+                            </div>
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs font-medium ${getRoleBadgeColor(member.role)}`}
+                            >
+                              {member.role}
+                            </Badge>
+                          </div>
                         ))}
-                        {member.projects.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{member.projects.length - 3} more
-                          </Badge>
-                        )}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
-                        Total: {member.totalProjects} projects
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant={member.status === 'Active' ? 'default' : 'secondary'}
-                        className={member.status === 'Active' ? 'bg-green-100 text-green-800' : ''}
-                      >
-                        {member.status}
-                      </Badge>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center justify-center gap-2">
@@ -295,6 +296,7 @@ export function TeamMembersContent() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600"
+                          title="View Details"
                         >
                           <Eye className="w-4 h-4" />
                         </Button>
@@ -302,6 +304,7 @@ export function TeamMembersContent() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 hover:bg-green-50 hover:text-green-600"
+                          title="Edit Team"
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
@@ -309,6 +312,7 @@ export function TeamMembersContent() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+                          title="Remove Project"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
