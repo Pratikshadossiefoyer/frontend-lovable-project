@@ -1,3 +1,4 @@
+
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown, Building2, User, BarChart3 } from "lucide-react";
+import { LayoutDashboard, FolderOpen, Search, Globe, Settings, LogOut, ChevronDown, Building2, User, BarChart3, Users } from "lucide-react";
 
 const menuItems = [
   {
@@ -36,6 +37,11 @@ const profileItems = [
     title: "User Profile",
     icon: User,
     url: "/user-profile",
+  },
+  {
+    title: "Team Members",
+    icon: Users,
+    url: "/team-members",
   },
 ];
 
