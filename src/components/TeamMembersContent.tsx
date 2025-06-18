@@ -4,85 +4,73 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Search, FolderOpen, Users, Calendar, Filter, Download, UserPlus, Eye, Edit, Trash2, Building2 } from "lucide-react";
+import { Search, FolderOpen, Users, Calendar, Filter, Download, UserPlus, Eye, Edit, Trash2, Building2, ChevronDown, ChevronUp } from "lucide-react";
 
 // Sample projects with team members data
 const projectsData = [
   {
     id: 1,
     name: "Test",
+    description: "Test project for development",
+    status: "Active",
     teamMembers: [
-      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" },
-      { email: "user02@gmail.com", name: "User Two", role: "Developer", avatar: "U2" }
+      { email: "nangaresaurabh18@gmail.com", firstName: "Saurabh", lastName: "Nangare", role: "Project Manager", avatar: "SN", status: "Active" },
+      { email: "user02@gmail.com", firstName: "User", lastName: "Two", role: "Developer", avatar: "U2", status: "Active" }
     ]
   },
   {
     id: 2,
     name: "Inora",
+    description: "Enterprise management system",
+    status: "Active",
     teamMembers: [
-      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
-      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
-      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
+      { email: "viveknangare02@gmail.com", firstName: "Vivek", lastName: "Nangare", role: "Developer", avatar: "VN", status: "Active" },
+      { email: "freelancer7@gmail.com", firstName: "Freelancer", lastName: "User", role: "Freelancer", avatar: "FU", status: "Active" },
+      { email: "teammember6@gmail.com", firstName: "Team", lastName: "Member", role: "SEO Specialist", avatar: "TM", status: "Active" }
     ]
   },
   {
     id: 3,
     name: "Technolearn",
+    description: "E-learning platform development",
+    status: "In Progress",
     teamMembers: [
-      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
-      { email: "freelancer8@gmail.com", name: "Freelancer Eight", role: "Freelancer", avatar: "F8" },
-      { email: "freelancer12@gmail.com", name: "Freelancer Twelve", role: "Content Writer", avatar: "F12" },
-      { email: "user02@gmail.com", name: "User Two", role: "Developer", avatar: "U2" }
+      { email: "freelancer7@gmail.com", firstName: "Freelancer", lastName: "User", role: "Freelancer", avatar: "FU", status: "Active" },
+      { email: "freelancer8@gmail.com", firstName: "Freelancer", lastName: "Eight", role: "Freelancer", avatar: "F8", status: "Active" },
+      { email: "freelancer12@gmail.com", firstName: "Freelancer", lastName: "Twelve", role: "Content Writer", avatar: "F12", status: "Active" },
+      { email: "user02@gmail.com", firstName: "User", lastName: "Two", role: "Developer", avatar: "U2", status: "Active" }
     ]
   },
   {
     id: 4,
     name: "TCS",
+    description: "Corporate solutions project",
+    status: "Active",
     teamMembers: [
-      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
-      { email: "freelancer12@gmail.com", name: "Freelancer Twelve", role: "Content Writer", avatar: "F12" },
-      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
+      { email: "viveknangare02@gmail.com", firstName: "Vivek", lastName: "Nangare", role: "Developer", avatar: "VN", status: "Active" },
+      { email: "freelancer12@gmail.com", firstName: "Freelancer", lastName: "Twelve", role: "Content Writer", avatar: "F12", status: "Active" },
+      { email: "teammember6@gmail.com", firstName: "Team", lastName: "Member", role: "SEO Specialist", avatar: "TM", status: "Active" }
     ]
   },
   {
     id: 5,
     name: "Growbizz Server",
+    description: "Server infrastructure project",
+    status: "Completed",
     teamMembers: [
-      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" }
+      { email: "nangaresaurabh18@gmail.com", firstName: "Saurabh", lastName: "Nangare", role: "Project Manager", avatar: "SN", status: "Active" }
     ]
   },
   {
     id: 6,
     name: "React",
+    description: "React application development",
+    status: "Active",
     teamMembers: [
-      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" },
-      { email: "teammember6@gmail.com", name: "Team Member", role: "SEO Specialist", avatar: "TM" }
-    ]
-  },
-  {
-    id: 7,
-    name: "Top",
-    teamMembers: [
-      { email: "freelancer7@gmail.com", name: "Freelancer User", role: "Freelancer", avatar: "FU" },
-      { email: "freelancer9@gmail.com", name: "Freelancer Nine", role: "Designer", avatar: "F9" }
-    ]
-  },
-  {
-    id: 8,
-    name: "Infosys",
-    teamMembers: [
-      { email: "nangaresaurabh18@gmail.com", name: "Saurabh Nangare", role: "Project Manager", avatar: "SN" },
-      { email: "viveknangare02@gmail.com", name: "Vivek Nangare", role: "Developer", avatar: "VN" }
+      { email: "viveknangare02@gmail.com", firstName: "Vivek", lastName: "Nangare", role: "Developer", avatar: "VN", status: "Active" },
+      { email: "teammember6@gmail.com", firstName: "Team", lastName: "Member", role: "SEO Specialist", avatar: "TM", status: "Active" }
     ]
   }
 ];
@@ -124,14 +112,26 @@ const stats = [
 
 export function TeamMembersContent() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [expandedProjects, setExpandedProjects] = useState<Set<number>>(new Set());
 
   const filteredProjects = projectsData.filter(project => 
     project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     project.teamMembers.some(member => 
       member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.name.toLowerCase().includes(searchTerm.toLowerCase())
+      member.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.lastName.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
+
+  const toggleProjectExpansion = (projectId: number) => {
+    const newExpanded = new Set(expandedProjects);
+    if (newExpanded.has(projectId)) {
+      newExpanded.delete(projectId);
+    } else {
+      newExpanded.add(projectId);
+    }
+    setExpandedProjects(newExpanded);
+  };
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
@@ -146,6 +146,21 @@ export function TeamMembersContent() {
       case 'Designer':
         return 'bg-pink-100 text-pink-800 border-pink-200';
       case 'Content Writer':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getStatusBadgeColor = (status: string) => {
+    switch (status) {
+      case 'Active':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'In Progress':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'Completed':
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'On Hold':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
@@ -177,19 +192,19 @@ export function TeamMembersContent() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-6 bg-gray-50 space-y-6">
         {/* Header Section */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Project Teams</h1>
-            <p className="text-gray-600">Manage project teams and member assignments across all projects</p>
+            <p className="text-gray-600">View all projects and their assigned team members</p>
           </div>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow">
+            <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow bg-white">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -206,23 +221,23 @@ export function TeamMembersContent() {
           ))}
         </div>
 
-        {/* Filters and Search */}
-        <Card className="border-0 shadow-sm">
+        {/* Search Bar */}
+        <Card className="border-0 shadow-sm bg-white">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
               <div className="flex items-center gap-4 w-full sm:w-auto">
-                <div className="relative flex-1 sm:w-80">
+                <div className="relative flex-1 sm:w-96">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
-                    placeholder="Search projects or team members..."
+                    placeholder="Search members by name or email..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 h-10 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                    className="pl-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500 bg-gray-50"
                   />
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="border-gray-200">
+                <Button variant="outline" size="sm" className="border-gray-200 h-11 px-4">
                   <Filter className="w-4 h-4 mr-2" />
                   Filter
                 </Button>
@@ -231,102 +246,90 @@ export function TeamMembersContent() {
           </CardContent>
         </Card>
 
-        {/* Projects and Teams Table */}
-        <Card className="border-0 shadow-lg overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
-            <CardTitle className="text-lg font-semibold text-gray-900">
-              Project Teams ({filteredProjects.length} Projects)
-            </CardTitle>
-            <p className="text-sm text-gray-600">View all projects and their assigned team members</p>
-          </CardHeader>
-          
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-50/50">
-                  <TableHead className="font-semibold text-gray-900 w-16">Sr. No.</TableHead>
-                  <TableHead className="font-semibold text-gray-900 min-w-[200px]">Project Name</TableHead>  
-                  <TableHead className="font-semibold text-gray-900">Team Members</TableHead>
-                  <TableHead className="font-semibold text-gray-900 text-center w-32">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredProjects.map((project, index) => (
-                  <TableRow key={project.id} className="hover:bg-gray-50/50 transition-colors">
-                    <TableCell className="font-medium text-gray-900">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                          <FolderOpen className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900">{project.name}</div>
-                          <div className="text-sm text-gray-500">{project.teamMembers.length} members</div>
-                        </div>
+        {/* Projects List */}
+        <div className="space-y-4">
+          {filteredProjects.map((project) => (
+            <Card key={project.id} className="border-0 shadow-sm hover:shadow-md transition-all duration-200 bg-white overflow-hidden">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                      <FolderOpen className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl font-semibold text-gray-900 mb-1">{project.name}</CardTitle>
+                      <p className="text-sm text-gray-600">{project.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className={`${getStatusBadgeColor(project.status)} font-medium`}>
+                      {project.status}
+                    </Badge>
+                    <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                      <Users className="w-4 h-4" />
+                      <span className="font-medium">Total Members - {project.teamMembers.length}</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => toggleProjectExpansion(project.id)}
+                      className="h-9 px-3 text-blue-600 hover:bg-blue-50"
+                    >
+                      {expandedProjects.has(project.id) ? "Hide Details" : "Show Details"}
+                      {expandedProjects.has(project.id) ? 
+                        <ChevronUp className="w-4 h-4 ml-2" /> : 
+                        <ChevronDown className="w-4 h-4 ml-2" />
+                      }
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+
+              {expandedProjects.has(project.id) && (
+                <CardContent className="pt-0">
+                  <div className="border-t pt-6">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="grid grid-cols-5 gap-4 text-sm font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                        <div>Email</div>
+                        <div>First Name</div>
+                        <div>Last Name</div>
+                        <div>Role</div>
+                        <div>Status</div>
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-3">
-                        {project.teamMembers.map((member, memberIndex) => (
-                          <div key={memberIndex} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                            <Avatar className="h-8 w-8">
-                              <AvatarFallback className="bg-white text-gray-700 text-xs font-medium border">
+                      {project.teamMembers.map((member, index) => (
+                        <div key={index} className="grid grid-cols-5 gap-4 items-center p-4 bg-white border border-gray-100 rounded-lg hover:shadow-sm transition-shadow">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10">
+                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white text-sm font-medium">
                                 {member.avatar}
                               </AvatarFallback>
                             </Avatar>
-                            <div className="flex-1 min-w-0">
-                              <div className="font-medium text-gray-900 text-sm truncate">{member.name}</div>
-                              <div className="text-xs text-gray-500 truncate">{member.email}</div>
-                            </div>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs font-medium ${getRoleBadgeColor(member.role)}`}
-                            >
+                            <div className="text-sm text-gray-900 font-medium truncate">{member.email}</div>
+                          </div>
+                          <div className="text-sm text-gray-900 font-medium">{member.firstName}</div>
+                          <div className="text-sm text-gray-900 font-medium">{member.lastName}</div>
+                          <div>
+                            <Badge variant="outline" className={`text-xs font-medium ${getRoleBadgeColor(member.role)}`}>
                               {member.role}
                             </Badge>
                           </div>
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center justify-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600"
-                          title="View Details"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 hover:bg-green-50 hover:text-green-600"
-                          title="Edit Team"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
-                          title="Remove Project"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </Card>
+                          <div>
+                            <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200 text-xs font-medium">
+                              {member.status}
+                            </Badge>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              )}
+            </Card>
+          ))}
+        </div>
 
         {/* Footer */}
-        <footer className="pt-8 border-t border-gray-200">
+        <footer className="pt-8 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center justify-between text-sm text-gray-500">
             <p>© 2025 SEO Detective - SEO TOOL.</p>
             <p>Powered by GrowBizz</p>
