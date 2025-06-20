@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Plus, Users, UserPlus, Edit, Trash2, ExternalLink, Eye, Globe, Calendar, FolderOpen } from "lucide-react";
 import { InviteTeamDialog } from "./InviteTeamDialog";
 import { AddFreelancerDialog } from "./AddFreelancerDialog";
+import { ProfessionalFooter } from "./ProfessionalFooter";
 
 const projects = [
   {
@@ -319,6 +319,9 @@ export function ManageProjectsContent() {
           </div>
         </footer>
       </main>
+
+      {/* Replace the old footer with the new professional footer */}
+      <ProfessionalFooter />
     </SidebarInset>
   );
 }

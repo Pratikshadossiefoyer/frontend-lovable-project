@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ import { KeywordRankingContent } from "./KeywordRankingContent";
 import { WebsiteSpeedContent } from "./WebsiteSpeedContent";
 import { HistoryContent } from "./HistoryContent";
 import { ProjectTabsPlaceholder } from "./ProjectTabsPlaceholder";
+import { ProfessionalFooter } from "./ProfessionalFooter";
 
 export function ProjectDashboardContent() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -169,12 +169,7 @@ export function ProjectDashboardContent() {
         </Tabs>
 
         {/* Enhanced Footer */}
-        <footer className="pt-8 border-t border-slate-200/60">
-          <div className="flex items-center justify-between text-sm text-slate-500">
-            <p className="font-medium">© 2025 SEO Detective - Professional SEO Analytics Platform</p>
-            <p className="font-medium">Powered by <span className="text-blue-600 font-semibold">GrowBizz</span></p>
-          </div>
-        </footer>
+        <ProfessionalFooter />
       </main>
     </SidebarInset>
   );
