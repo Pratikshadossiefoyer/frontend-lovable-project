@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import $ from "jquery";
@@ -115,7 +116,6 @@ export const CrawledUrlsTable = () => {
     } finally {
       setLoading(false);
 
-      // Fixed the condition check
       if (alert?.message === "Export successful!") {
         setTimeout(() => setAlert(null), 3000);
       }
@@ -156,9 +156,9 @@ export const CrawledUrlsTable = () => {
           render: (data, type, row) => {
             if (data === "No image links found") return data;
             if (Number(row.status_code) >= 400) {
-              return '<div class="text-danger text-center fs-5">❌</div>';
+              return '<div class="text-danger text-center">❌</div>';
             }
-            return `<div class="preview-container"><img src="${data}" alt="Preview" class="preview-image" onerror="this.style.display='none'; this.nextSibling.style.display='block';" /><div class="no-image-text">No img</div></div>`;
+            return `<img src="${data}" alt="Preview" style="width:40px; height:auto; cursor:pointer; border-radius: 4px;" onerror="this.style.display='none'; this.nextSibling.style.display='block';" /><div style="display:none; font-size:0.7rem; color:#666;">No img</div>`;
           },
           searchable: false,
           orderable: false,
@@ -169,28 +169,21 @@ export const CrawledUrlsTable = () => {
           render: (data) => {
             if (data === "No image links found") return "N/A";
 
-            // Adjust URL display length based on screen size
             const isMobile = window.innerWidth < 768;
             const maxLength = isMobile ? 25 : 40;
             const displayUrl = data.length > maxLength ? data.substring(0, maxLength) + "..." : data;
 
             return `
-              <div class="link-container">
-                <div class="url-text" title="${data}">
+              <div class="d-flex align-items-center flex-wrap">
+                <div class="text-truncate me-2 mb-1 mb-md-0" style="max-width: ${isMobile ? '150px' : '250px'}; font-size: ${isMobile ? '0.8rem' : '0.875rem'};">
                   ${displayUrl}
                 </div>
-                <div class="action-buttons">
-                  <button class="copy-url-btn action-btn" data-url="${data}" title="Copy URL" role="button" aria-label="Copy URL">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
-                      <rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                      <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                    </svg>
+                <div class="d-flex gap-2">
+                  <button class="copy-url-btn btn btn-outline-primary btn-sm rounded-pill px-3 py-1" data-url="${data}" title="Copy URL">
+                    <i class="fas fa-copy me-1"></i>Copy
                   </button>
-                  <button class="external-link-icon action-btn" data-url="${data}" title="Open link in new tab" aria-label="Open link in new tab">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-                    </svg>
+                  <button class="external-link-icon btn btn-outline-secondary btn-sm rounded-pill px-3 py-1" data-url="${data}" title="Open link">
+                    <i class="fas fa-external-link-alt me-1"></i>Open
                   </button>
                 </div>
               </div>
@@ -203,42 +196,30 @@ export const CrawledUrlsTable = () => {
           type: "alt-text",
           render: (data) => {
             if (!data || data === "NULL") {
-              return `<span class="null-text">NULL</span>`;
+              return `<span class="badge bg-light text-muted">NULL</span>`;
             }
             const isMobile = window.innerWidth < 768;
             const maxLength = isMobile ? 20 : 30;
             const displayText = data.length > maxLength ? data.substring(0, maxLength) + "..." : data;
-            return `<span class="alt-text" title="${data}">${displayText}</span>`;
+            return `<span class="text-dark" title="${data}">${displayText}</span>`;
           },
         },
         {
           title: "Status",
           data: "status_code",
           render: (data) => {
-            if (data === "NULL" || data === "") return `<span class="status-badge status-null">${data}</span>`;
+            if (data === "NULL" || data === "") return `<span class="badge bg-secondary">NULL</span>`;
             const numericData = Number(data);
-            let statusClass = "status-default";
-            if (numericData >= 400) statusClass = "status-error";
-            else if (numericData >= 300) statusClass = "status-warning";
-            else if (numericData >= 200) statusClass = "status-success";
-            return `<span class="status-badge ${statusClass}">${data}</span>`;
+            let badgeClass = "bg-secondary";
+            if (numericData >= 400) badgeClass = "bg-danger";
+            else if (numericData >= 300) badgeClass = "bg-warning";
+            else if (numericData >= 200) badgeClass = "bg-success";
+            return `<span class="badge ${badgeClass}">${data}</span>`;
           },
         },
       ],
       order: [[2, "asc"]],
       drawCallback: function () {
-        try {
-          $(tableRef.current)
-            .find('[data-bs-toggle="tooltip"]')
-            .tooltip({ trigger: "manual" });
-        } catch (error) {
-          $(tableRef.current)
-            .find(".copy-url-btn")
-            .each(function () {
-              $(this).attr("title", copiedUrl === $(this).data("url") ? "Copied!" : "Copy URL");
-            });
-        }
-
         $(tableRef.current)
           .find("img")
           .off("click")
@@ -249,7 +230,7 @@ export const CrawledUrlsTable = () => {
 
         $(tableRef.current)
           .find(".copy-url-btn")
-          .off("click keydown")
+          .off("click")
           .on("click", function () {
             const $this = $(this);
             const url = $this.data("url");
@@ -259,75 +240,25 @@ export const CrawledUrlsTable = () => {
             }
             navigator.clipboard.writeText(url).then(() => {
               setCopiedUrl(url);
-              try {
-                $this.tooltip("hide").attr("data-bs-title", "Copied!").tooltip("show");
-                setTimeout(() => {
-                  $this.tooltip("hide").attr("data-bs-title", "Copy URL");
-                }, 2000);
-              } catch (error) {
-                $this.attr("title", "Copied!");
-                setTimeout(() => {
-                  $this.attr("title", "Copy URL");
-                }, 2000);
-              }
+              $this.html('<i class="fas fa-check me-1"></i>Copied!');
               setTimeout(() => {
-                setAlert(null);
+                $this.html('<i class="fas fa-copy me-1"></i>Copy');
                 setCopiedUrl(null);
-              }, 1000);
+              }, 2000);
             }).catch(() => {
               setAlert({ message: "Failed to copy URL", type: "danger" });
             });
-          })
-          .on("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              const $this = $(this);
-              const url = $this.data("url");
-              if (!url) {
-                setAlert({ message: "No URL to copy", type: "warning" });
-                return;
-              }
-              navigator.clipboard.writeText(url).then(() => {
-                setAlert({ message: "URL copied successfully!", type: "success" });
-                setCopiedUrl(url);
-                try {
-                  $this.tooltip("hide").attr("data-bs-title", "Copied!").tooltip("show");
-                  setTimeout(() => {
-                    $this.tooltip("hide").attr("data-bs-title", "Copy URL");
-                  }, 2000);
-                } catch (error) {
-                  $this.attr("title", "Copied!");
-                  setTimeout(() => {
-                    $this.attr("title", "Copy URL");
-                  }, 2000);
-                }
-                setTimeout(() => {
-                  setAlert(null);
-                  setCopiedUrl(null);
-                }, 2000);
-              }).catch(() => {
-                setAlert({ message: "Failed to copy URL", type: "danger" });
-              });
-            }
           });
 
         $(tableRef.current)
           .find(".external-link-icon")
-          .off("click keydown")
+          .off("click")
           .on("click", function () {
             const url = $(this).data("url");
             if (url) {
               window.open(url, "_blank", "noopener,noreferrer");
             }
-          })
-          .on("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              const url = $(this).data("url");
-              if (url) {
-                window.open(url, "_blank", "noopener,noreferrer");
-              }
-            }
           });
-
       },
     });
 
@@ -341,7 +272,6 @@ export const CrawledUrlsTable = () => {
 
   const closeImage = () => setSelectedImage(null);
 
-  // Show a message if no data is available
   if (!imageLinks || imageLinks.length === 0) {
     return (
       <div className="container-fluid px-2 px-md-3 mt-2 mt-md-3">
@@ -367,19 +297,19 @@ export const CrawledUrlsTable = () => {
           background: white;
           border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
           border: none;
         }
 
         .table thead th {
-          background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
           font-weight: 600;
-          font-size: 0.875rem;
           letter-spacing: 0.5px;
-          text-transform: uppercase;
-          padding: 16px 12px;
           border: none;
+          padding: 16px 12px;
+          text-transform: uppercase;
+          font-size: 0.85rem;
           position: relative;
         }
 
@@ -392,235 +322,174 @@ export const CrawledUrlsTable = () => {
         }
 
         .table tbody tr {
-          border-bottom: 1px solid #e8ecf0;
-          transition: all 0.2s ease;
+          transition: all 0.3s ease;
+          border: none;
+          border-bottom: 1px solid #f1f5f9;
         }
 
         .table tbody tr:hover {
-          background-color: #f8fafc;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
           transform: translateY(-1px);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .table tbody tr:last-child {
-          border-bottom: none;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .table tbody td {
           padding: 16px 12px;
           vertical-align: middle;
           border: none;
+          font-size: 0.9rem;
         }
 
-        /* Preview Container */
-        .preview-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 50px;
-          height: 50px;
-          margin: 0 auto;
+        .table tbody tr:last-child td:first-child {
+          border-bottom-left-radius: 12px;
         }
 
-        .preview-image {
-          width: 45px;
-          height: 45px;
-          object-fit: cover;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          border: 2px solid #e2e8f0;
-        }
-
-        .preview-image:hover {
-          transform: scale(1.1);
-          border-color: #3b82f6;
-          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .no-image-text {
-          display: none;
-          font-size: 0.75rem;
-          color: #64748b;
-          font-weight: 500;
-        }
-
-        /* Link Container */
-        .link-container {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          min-height: 40px;
-        }
-
-        .url-text {
-          flex: 1;
-          font-size: 0.875rem;
-          color: #334155;
-          font-weight: 500;
-          word-break: break-all;
-          line-height: 1.4;
-        }
-
-        .action-buttons {
-          display: flex;
-          gap: 6px;
-          opacity: 0.7;
-          transition: opacity 0.2s ease;
-        }
-
-        .link-container:hover .action-buttons {
-          opacity: 1;
-        }
-
-        .action-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 32px;
-          height: 32px;
-          border: 1px solid #d1d5db;
-          background: white;
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          color: #6b7280;
-        }
-
-        .action-btn:hover {
-          background: #f3f4f6;
-          border-color: #9ca3af;
-          color: #374151;
-          transform: translateY(-1px);
-        }
-
-        .copy-url-btn:hover {
-          background: #dbeafe;
-          border-color: #3b82f6;
-          color: #1d4ed8;
-        }
-
-        .external-link-icon:hover {
-          background: #ecfdf5;
-          border-color: #10b981;
-          color: #047857;
-        }
-
-        /* Alt Text */
-        .alt-text {
-          font-size: 0.875rem;
-          color: #475569;
-          font-weight: 500;
-          line-height: 1.4;
-        }
-
-        .null-text {
-          font-size: 0.8rem;
-          color: #94a3b8;
-          font-style: italic;
-          font-weight: 400;
-          background: #f1f5f9;
-          padding: 4px 8px;
-          border-radius: 4px;
+        .table tbody tr:last-child td:last-child {
+          border-bottom-right-radius: 12px;
         }
 
         /* Status Badges */
-        .status-badge {
-          display: inline-block;
+        .badge {
           padding: 6px 12px;
-          border-radius: 6px;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           font-weight: 600;
-          text-align: center;
-          min-width: 60px;
+          border-radius: 20px;
+          letter-spacing: 0.5px;
         }
 
-        .status-success {
-          background: #dcfce7;
-          color: #166534;
-          border: 1px solid #bbf7d0;
+        .badge.bg-success {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
         }
 
-        .status-warning {
-          background: #fef3c7;
-          color: #92400e;
-          border: 1px solid #fde68a;
+        .badge.bg-danger {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
         }
 
-        .status-error {
-          background: #fee2e2;
-          color: #dc2626;
-          border: 1px solid #fecaca;
+        .badge.bg-warning {
+          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+          box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
         }
 
-        .status-null {
-          background: #f1f5f9;
-          color: #64748b;
+        .badge.bg-secondary {
+          background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+          box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+        }
+
+        .badge.bg-light {
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+          color: #64748b !important;
           border: 1px solid #e2e8f0;
         }
 
-        .status-default {
-          background: #f8fafc;
-          color: #475569;
-          border: 1px solid #cbd5e1;
+        /* Action Buttons */
+        .btn {
+          transition: all 0.3s ease;
+          font-weight: 500;
+          letter-spacing: 0.3px;
+          border: none;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* DataTables Overrides */
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-          margin: 12px 0;
+        .btn-outline-primary {
+          color: #3b82f6;
+          border: 2px solid #3b82f6;
+          background: rgba(59, 130, 246, 0.05);
         }
 
+        .btn-outline-primary:hover {
+          background: #3b82f6;
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-outline-secondary {
+          color: #6b7280;
+          border: 2px solid #6b7280;
+          background: rgba(107, 114, 128, 0.05);
+        }
+
+        .btn-outline-secondary:hover {
+          background: #6b7280;
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn-sm {
+          font-size: 0.75rem;
+          padding: 6px 12px;
+        }
+
+        /* DataTables Styling */
         .dataTables_wrapper .dataTables_paginate .paginate_button {
-          padding: 8px 12px;
+          border-radius: 8px !important;
           margin: 0 2px;
-          border-radius: 6px;
-          border: 1px solid #d1d5db;
-          background: white;
-          color: #374151;
           transition: all 0.2s ease;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-          background: #f3f4f6;
-          border-color: #9ca3af;
-          transform: translateY(-1px);
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+          color: white !important;
+          border: none !important;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-          background: #3b82f6;
-          border-color: #3b82f6;
-          color: white;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+          color: white !important;
+          border: none !important;
         }
 
-        /* Responsive adjustments */
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+          border: 2px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 8px 12px;
+          transition: all 0.2s ease;
+        }
+
+        .dataTables_wrapper .dataTables_length select:focus,
+        .dataTables_wrapper .dataTables_filter input:focus {
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          outline: none;
+        }
+
+        /* Image Preview Styling */
+        .table img {
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          border: 2px solid #f1f5f9;
+        }
+
+        .table img:hover {
+          transform: scale(1.05);
+          border-color: #667eea;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
           .table thead th {
             padding: 12px 8px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
           }
-          
+
           .table tbody td {
             padding: 12px 8px;
+            font-size: 0.8rem;
           }
 
-          .preview-image {
-            width: 35px;
-            height: 35px;
-          }
-
-          .action-btn {
-            width: 28px;
-            height: 28px;
-          }
-
-          .status-badge {
+          .btn-sm {
+            font-size: 0.7rem;
             padding: 4px 8px;
-            font-size: 0.75rem;
-            min-width: 50px;
+          }
+
+          .badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
           }
         }
         `}
@@ -692,7 +561,7 @@ export const CrawledUrlsTable = () => {
           className="table table-striped table-bordered table-sm"
           style={{ width: "100%", minWidth: "600px" }}
         >
-          <thead>
+          <thead className="table-dark">
             <tr>
               <th style={{ width: "60px" }}>Preview</th>
               <th style={{ minWidth: "200px" }}>Image Link</th>
