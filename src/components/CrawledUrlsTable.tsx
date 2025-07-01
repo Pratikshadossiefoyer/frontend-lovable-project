@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import $ from "jquery";
@@ -7,12 +8,11 @@ import "datatables.net";
 import "datatables.net-bs5";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { CFormSelect, CFormLabel, CButton } from "@coreui/react";
-import styles from 'src/Home.module.css';
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import { CAlert } from "@coreui/react";
 
-const ImageLinks = () => {
+export const CrawledUrlsTable = () => {
   const location = useLocation();
   const tableRef = useRef(null);
   const tableInstance = useRef(null);
@@ -360,7 +360,8 @@ const ImageLinks = () => {
 
   return (
     <div className="container-fluid px-2 px-md-3 mt-2 mt-md-3">
-      <style jsx>{`
+      <style>
+        {`
         /* Enhanced Table Styling */
         .table {
           background: white;
@@ -622,7 +623,8 @@ const ImageLinks = () => {
             min-width: 50px;
           }
         }
-      `}</style>
+        `}
+      </style>
 
       {alert && (
         <CAlert color={alert.type} dismissible onClose={() => setAlert(null)} className="custom-alert mb-2">
@@ -672,7 +674,7 @@ const ImageLinks = () => {
               <CButton
                 color="success"
                 size="sm"
-                className={`text-white ${styles.btnforall}`}
+                className="text-white"
                 onClick={downloadImageLinks}
                 disabled={loading || !imageLinks || imageLinks.length === 0}
               >
@@ -750,4 +752,4 @@ const ImageLinks = () => {
   );
 };
 
-export default ImageLinks;
+export default CrawledUrlsTable;
